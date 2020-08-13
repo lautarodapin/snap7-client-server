@@ -1,0 +1,4 @@
+nombre,funcion,byte,bit
+db_fosforico,get_real,0,0
+db_fosforico,get_bool,1,0
+db_fosforico,get_bool,1,1
