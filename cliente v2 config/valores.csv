@@ -1,0 +1,8 @@
+nombre, funcion, byte, bit
+dbs,set_real,0,0
+dbs,set_bool,1,0
+dbs,set_bool,1,1
+dbs,set_bool,1,2
+dbs,set_bool,1,3
+dbs,set_bool,1,4
+dbs,set_bool,1,5

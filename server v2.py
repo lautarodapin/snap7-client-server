@@ -1,35 +1,43 @@
 import snap7
 import time
 import logging
+import ctypes
 from snap7 import util
-from snap7.snap7types import *
+from snap7 import snap7types
 import csv
 import pandas as pd
 logging.basicConfig(level=logging.INFO)
 
-size = 10
-
-df_init = pd.read_csv('configs/server init.csv').dropna()
-
-
 server = snap7.server.Server()
-globaldata = (wordlen_to_ctypes[S7WLByte]*size)()
-outputs = (wordlen_to_ctypes[S7WLByte]*size)()
-inputs = (wordlen_to_ctypes[S7WLByte]*size)()
-dbs = (wordlen_to_ctypes[S7WLByte]*size)()
 
-server.register_area(srvAreaPA, 0, outputs)
-server.register_area(srvAreaMK, 0, globaldata)
-server.register_area(srvAreaPE, 0, inputs)
-server.register_area(srvAreaDB, 0, dbs)
+
+areas = pd.read_csv('server config/server areas.csv')
+AREAS = {}
+for i in range(0, len(areas)):
+    area = getattr(snap7types, areas.iloc[i,0])
+    numero = areas.iloc[i,1]
+    nombre = areas.iloc[i,2]
+    size = areas.iloc[i,3]
+    AREAS[nombre]= (snap7types.wordlen_to_ctypes[snap7types.S7WLByte]*size)()
+    server.register_area(area, int(numero), AREAS[nombre])
 
 server.start(tcpport=8088)
 
-util.set_real(outputs, 0, 1.234)      # srvAreaPA
-util.set_real(globaldata, 0, 2.234)   # srvAreaMK
-util.set_real(inputs, 0, 3.234)       # srvAreaPE
-util.set_real(dbs, 0, 31.1)
-util.set_bool(dbs, 1, 0, True)
+
+valores = pd.read_csv('server config/valores.csv')
+for i in range(0, len(valores)):
+    variable = valores.iloc[i,0]
+    funcion = valores.iloc[i,1]
+    byte = int(valores.iloc[i,2])
+    bit = int(valores.iloc[i,3])
+    valor = int(valores.iloc[i,4])
+
+    if 'bool' in funcion:
+        getattr(util, funcion)(AREAS[variable], byte, bit, valor)
+    else:
+        getattr(util, funcion)(AREAS[variable], byte, valor)
+    
+
 while True:
     while True:
         event = server.pick_event()

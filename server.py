@@ -4,9 +4,11 @@ import logging
 from snap7 import util
 from snap7.snap7types import *
 logging.basicConfig(level=logging.INFO)
+PORT = 8088
+SIZE = 10
 
 server = snap7.server.Server()
-size = 10
+size = SIZE
 
 globaldata = (wordlen_to_ctypes[S7WLByte]*size)()
 outputs = (wordlen_to_ctypes[S7WLByte]*size)()
@@ -18,14 +20,15 @@ server.register_area(srvAreaMK, 0, globaldata)
 server.register_area(srvAreaPE, 0, inputs)
 server.register_area(srvAreaDB, 0, dbs)
 
-server.start(tcpport=8088)
+server.start(tcpport=PORT)
 
 util.set_real(outputs, 0, 1.234)      # srvAreaPA
 util.set_real(globaldata, 0, 2.234)   # srvAreaMK
 util.set_real(inputs, 0, 3.234)       # srvAreaPE
 util.set_real(dbs, 0, 31.1)
-util.set_bool(dbs, 1, 0, True)
-util.set_bool(dbs, 1, 1, False)
+util.set_bool(dbs, 5, 0, True)
+util.set_bool(dbs, 5, 1, True)
+util.set_int(dbs, 6, 12323)
 while True:
     while True:
         event = server.pick_event()

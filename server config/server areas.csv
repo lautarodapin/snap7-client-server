@@ -1,0 +1,5 @@
+area,numero,nombre,size
+srvAreaPA,0,outputs,10
+srvAreaMK,0,globaldata,10
+srvAreaPE,0,inputs,10
+srvAreaDB,0,dbs,10
