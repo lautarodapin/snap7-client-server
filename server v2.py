@@ -2,7 +2,8 @@ import snap7
 import time
 import logging
 import ctypes
-from snap7 import util
+from snap7.util import *
+from extras import *
 from snap7 import snap7types
 import csv
 import pandas as pd
@@ -33,9 +34,11 @@ for i in range(0, len(valores)):
     valor = int(valores.iloc[i,4])
 
     if 'bool' in funcion:
-        getattr(util, funcion)(AREAS[variable], byte, bit, valor)
+        # getattr(globals(), funcion)(AREAS[variable], byte, bit, valor)
+        globals()[funcion](AREAS[variable], byte, bit, valor)
     else:
-        getattr(util, funcion)(AREAS[variable], byte, valor)
+        # getattr(globals(), funcion)(AREAS[variable], byte, valor)
+        globals()[funcion](AREAS[variable], byte, valor)
     
 
 while True:

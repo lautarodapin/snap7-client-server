@@ -1,0 +1,5 @@
+0.0     bool0       BOOL
+0.1     bool1       BOOL
+0.2     bool2       BOOL
+1       real0       REAL
+3       int0        INT

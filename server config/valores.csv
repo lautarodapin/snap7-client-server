@@ -1,8 +1,26 @@
 nombre, funcion, byte, bit,valor
-dbs,set_real,0,0,31.1
-dbs,set_bool,1,0,1
-dbs,set_bool,1,1,0
-dbs,set_bool,1,2,1
-dbs,set_bool,1,3,0
-dbs,set_bool,1,4,0
-dbs,set_bool,1,5,1
+dbs,set_small_int,0,0,12
+dbs,set_small_int,1,0,30
+dbs,set_small_int,2,0,45
+dbs,set_real, 3,0,1500
+dbs,set_int,8,0,99
+
+
+dbs,set_small_int,10,0,13
+dbs,set_small_int,11,0,35
+dbs,set_small_int,12,0,50
+dbs,set_real, 13,0,1600
+dbs,set_int,18,0,110
+
+
+dbs,set_small_int,20,0,14
+dbs,set_small_int,21,0,40
+dbs,set_small_int,22,0,55
+dbs,set_real, 23,0,1700
+dbs,set_int,28,0,120
+
+globaldata,set_bool,0,0,1
+globaldata,set_bool,0,1,1
+globaldata,set_bool,0,2,1
+globaldata,set_real,1,0,10.5
+globaldata,set_int,3,0,15
