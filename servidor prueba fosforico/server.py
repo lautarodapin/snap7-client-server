@@ -2,7 +2,7 @@ import snap7
 import time
 import logging
 import ctypes
-# from snap7.util import *
+from snap7.util import *
 from extras import *
 from snap7 import snap7types
 import csv

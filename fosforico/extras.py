@@ -15,22 +15,19 @@ def get_small_int(bytearray_, byte_index):
 
     small int are represented in 1 byte
     """
-    data = [0x00]
-    data.append(bytearray_[byte_index])
-    data[1] = data[1] & 0xff
-    packed = struct.pack('2B', *data)
-    value = struct.unpack('>h', packed)[0]
+    data = bytearray_[byte_index] & 0xff
+    packed = struct.pack('B', data)
+    value = struct.unpack('>B', packed)[0]
     return value
 
 
-def set_int(bytearray_, byte_index, _int):
+def set_small_int(bytearray_, byte_index, _int):
     """
     Set value in bytearray to int
     """
-    # make sure were dealing with an int
     _int = int(_int)
-    _bytes = struct.unpack('2B', struct.pack('>h', _int))
-    bytearray_[byte_index:byte_index + 2] = _bytes
+    _bytes = struct.unpack('B', struct.pack('>B', _int))
+    bytearray_[byte_index] = _bytes[0]
     return bytearray_
 
 
@@ -121,7 +118,7 @@ class DB_Row_mixin(DB_Row):
             return set_int(_bytearray, byte_index, value)
             
         if _type == 'SINT':
-            return get_small_int(_bytearray, byte_index)
+            return set_small_int(_bytearray, byte_index)
 
         raise ValueError
 
