@@ -1,0 +1,5 @@
+0   hora        SINT
+1   minuto      SINT
+2   segundo     SINT
+3   real        REAL
+8   int         INT
