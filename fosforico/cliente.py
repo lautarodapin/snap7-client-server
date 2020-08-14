@@ -8,16 +8,16 @@ import csv
 from datetime import datetime
 import schedule
 IP = '127.0.0.1' # ip del plc
-PORT = 8088#102 #default is 102
+PORT = 102 #default is 102
 RACK = 0
 SLOT = 0
-DB = 0#14 # numero de DB que se tiene que leer
+DB = 14 # numero de DB que se tiene que leer
 DELAY = 60 * 60 * 1 # es en segundos, 60 * 60 * 1 = 1 hora
-LONGITUD_STRUCT = 10#48 #longitud del struct en el offset es 46.0 + 2bytes del ultimo int
+LONGITUD_STRUCT = 48 #longitud del struct en el offset es 46.0 + 2bytes del ultimo int
 LONGITUD_ARRAY = 1000 #longitud del array
-LONGITUD_MARCAS = 10#914 #longitud del DB0 -> marcas MW912 -> entonces leo hasta el 912 + 2 bytes
-LAYOUT = 'layout config/db_test.txt'
-LAYOUT_MARCA = 'layout config/marcas_test.txt'
+LONGITUD_MARCAS = 914 #longitud del DB0 -> marcas MW912 -> entonces leo hasta el 912 + 2 bytes
+LAYOUT = 'layout config/db14.txt'
+LAYOUT_MARCA = 'layout config/marcas fosforico.txt'
 
 LOG_FILE = 'log-{}.csv'.format(int(time.time())) # formato del csv log-150240240.csv
 
