@@ -118,7 +118,7 @@ class DB_Row_mixin(DB_Row):
             return set_int(_bytearray, byte_index, value)
             
         if _type == 'SINT':
-            return set_small_int(_bytearray, byte_index)
+            return set_small_int(_bytearray, byte_index, value)
 
         raise ValueError
 
