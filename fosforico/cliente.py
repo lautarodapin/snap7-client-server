@@ -56,7 +56,8 @@ with open(os.path.join(BASE_DIR, LAYOUT_MARCA), 'r')  as f:
 
 def main(client, db, marca):
     try:
-        marca[0].read(client)
+        marca_data = client.read_area(S7AreaMK, 0, 0, LONGITUD_MARCAS)
+        marca = DB_mixin(0, marca_data, layout_marca, LONGITUD_MARCAS, 1)
         indice = marca[0]['index']
         INDEX[0] = indice
         _db = db[indice]
