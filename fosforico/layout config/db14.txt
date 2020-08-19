@@ -1,10 +1,10 @@
 0.0         YEAR                    INT        	
-2.0         MONTH                   SINT       	
-3.0         DAY             	    SINT       	
-4.0         WEEKDAY                 SINT       	
-5.0         HOUR                    SINT       	
-6.0         MINUTE                  SINT       	
-7.0         SECOND                  SINT       	
+2.0         MONTH                   USINT       	
+3.0         DAY             	    USINT       	
+4.0         WEEKDAY                 USINT       	
+5.0         HOUR                    USINT       	
+6.0         MINUTE                  USINT       	
+7.0         SECOND                  USINT       	
 8.0         NANOSECOND              REAL       	
 12.0        Conductividad_uS        REAL       	
 16.0        Temperatura             REAL       	

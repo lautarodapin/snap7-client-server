@@ -9,11 +9,34 @@ DB_Row_mixin::hereda de DB_Row: añade en set_value y get_value el SINT
 '''
 
 
-def get_small_int(bytearray_, byte_index):
-    """
-    Get small int value from bytearray.
 
-    small int are represented in 1 byte
+
+def set_usint(bytearray_, byte_index, _int):
+    """set unsigned small int
+
+    Args:
+        bytearray_ (bytearray): bytearray
+        byte_index (int): index of the bytearray
+        _int (int): positive value to set (0 - 255)
+
+    Returns:
+        bytearray: bytearray of the db
+    """
+    _int = int(_int)
+    _bytes = struct.unpack('B', struct.pack('>B', _int))
+    bytearray_[byte_index] = _bytes[0]
+    return bytearray_
+
+
+def get_usint(bytearray_, byte_index):
+    """get the unsigned small int from the bytearray
+
+    Args:
+        bytearray_ (bytearray)
+        byte_index (int): index of the bytearray
+
+    Returns:
+        int: unsigned small int (0 - 255)
     """
     data = bytearray_[byte_index] & 0xff
     packed = struct.pack('B', data)
@@ -21,14 +44,37 @@ def get_small_int(bytearray_, byte_index):
     return value
 
 
-def set_small_int(bytearray_, byte_index, _int):
-    """
-    Set value in bytearray to int
+def set_sint(bytearray_, byte_index, _int):
+    """set small int
+
+    Args:
+        bytearray_ (bytearray)
+        byte_index (int): index of the bytearray
+        _int (int): small int (-128 - 127)
+
+    Returns:
+        bytearray
     """
     _int = int(_int)
-    _bytes = struct.unpack('B', struct.pack('>B', _int))
+    _bytes = struct.unpack('B', struct.pack('>b', _int))
     bytearray_[byte_index] = _bytes[0]
     return bytearray_
+
+
+def get_sint(bytearray_, byte_index):
+    """get the small int
+
+    Args:
+        bytearray_ (bytearray)
+        byte_index (int): index of the bytearray
+
+    Returns:
+        int: small int (-127 - 128)
+    """
+    data = bytearray_[byte_index]
+    packed = struct.pack('B', data)
+    value = struct.unpack('>b', packed)[0]
+    return value
 
 
 class DB_mixin(DB):
@@ -88,9 +134,11 @@ class DB_Row_mixin(DB_Row):
         if _type == 'INT':
             return get_int(_bytearray, byte_index)
 
-        if _type == 'SINT':
-            return get_small_int(_bytearray, byte_index)
+        if _type == 'USINT':
+            return get_usint(_bytearray, byte_index)
 
+        if _type == 'SINT':
+            return get_sint(_bytearray, byte_index)
         raise ValueError
 
     def set_value(self, byte_index, _type, value):
@@ -116,9 +164,12 @@ class DB_Row_mixin(DB_Row):
 
         if _type == 'INT':
             return set_int(_bytearray, byte_index, value)
-            
+        
+        if _type == 'USINT':
+            return set_usint(_bytearray, byte_index, value)
+
         if _type == 'SINT':
-            return set_small_int(_bytearray, byte_index, value)
+            return set_sint(_bytearray, byte_index, value)
 
         raise ValueError
 
