@@ -27,6 +27,7 @@ LAYOUT_MARCA = 'layout config/marcas fosforico.txt'
 LOG_FILE = 'log-{}.csv'.format(int(time.time())) # formato del csv log-150240240.csv
 INDEX = (None,None)
 def write_csv(dictionary):
+    logging.info('Exportando datos')
     lista = [valor for variable, valor in dictionary.items()]
     with open(os.path.join(BASE_DIR ,'logs', LOG_FILE), 'a', newline='') as f:
         writer = csv.writer(f)
@@ -54,19 +55,19 @@ with open(os.path.join(BASE_DIR, LAYOUT_MARCA), 'r')  as f:
     layout_marca = f.read()
 
 
-def main(client, db, marca):
+def main(client, db):
     try:
         marca_data = client.read_area(S7AreaMK, 0, 0, LONGITUD_MARCAS)
         marca = DB_mixin(0, marca_data, layout_marca, LONGITUD_MARCAS, 1)
-        indice = marca[0]['index']
+        indice = marca[0]['index'] -1
         INDEX[0] = indice
         _db = db[indice]
         _db.read(client)
         if INDEX[0] != INDEX[1] or INDEX[0] is None: # verifico si paso de indic para no repetir
             write_csv(_db.export())
             INDEX[1] = INDEX[0]
-    except:
-        print('Funcion fallo')
+    except Exception as e:
+        logging.error(e)
 
 
 
@@ -87,8 +88,8 @@ if __name__ == "__main__":
         try:
             if not client.get_connected():
                 reconect(client)
+            main(client=client, db=db)
             time.sleep(DELAY)
-            main(client=client, db=db, marca=marca)
             #schedule.run_pending()
             time.sleep(1)
         except KeyboardInterrupt:
